@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Automated Algorithm Performance Analyzer - Benchmark, compare, and visualize algorithm efficiency in real-time.">
+    <title>AlgoViz — Algorithm Performance Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Animated Background Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar" id="navBar">
+        <div class="nav-left">
+            <a href="javascript:void(0);" onclick="location.reload();" class="logo" style="text-decoration: none;">
+                <svg class="logo-icon" viewBox="0 0 32 32" width="28" height="28">
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00f0ff" />
+                            <stop offset="50%" style="stop-color:#8b5cf6" />
+                            <stop offset="100%" style="stop-color:#f472b6" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M16 2L2 9v14l14 7 14-7V9L16 2zm0 4l10 5-10 5-10-5 10-5zm-10 9l10 5 10-5v4l-10 5-10-5v-4z"
+                        fill="url(#logoGrad)" />
+                </svg>
+                <span class="logo-text">AlgoViz</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <div class="theme-toggle-track">
+                    <div class="theme-toggle-thumb">
+                        <svg class="sun-icon" viewBox="0 0 24 24" width="14" height="14">
+                            <path
+                                d="M12 3V1m0 22v-2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 7a5 5 0 100 10 5 5 0 000-10z"
+                                stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" width="14" height="14">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" stroke-width="2"
+                                fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                <span>Algorithm Performance Analysis</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line" data-reveal>Analyze.</span>
+                <span class="title-line" data-reveal>Benchmark.</span>
+                <span class="title-line gradient-text" data-reveal>Visualize.</span>
+            </h1>
+            <p class="hero-subtitle" data-reveal>
+                Run 39 algorithms across 7 categories. Measure execution time, memory usage, and automatically detect
+                Big-O complexity — all in your browser.
+            </p>
+            <div class="hero-actions" data-reveal>
+                <a href="#analyzer" class="btn btn-primary btn-glow">
+                    <span>Start Analyzing</span>
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+                <a href="#how-it-works" class="btn btn-glass">
+                    <span>How It Works</span>
+                </a>
+            </div>
+            <div class="hero-stats" data-reveal>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="39">0</span>
+                    <span class="stat-label">Algorithms</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number" data-count="7">0</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Client-Side</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- How It Works -->
+    <section class="section" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title" data-reveal>How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card glass-card" data-reveal data-delay="0">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32">
+                            <path d="M4 6h16M4 12h16M4 18h7" stroke="currentColor" stroke-width="2" fill="none"
+                                stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3>Select Category</h3>
+                    <p>Choose from 7 algorithm categories: Sorting, Searching, Graph, Greedy, Backtracking, Divide &
+                        Conquer, Recursion.</p>
+                </div>
+                <div class="step-card glass-card" data-reveal data-delay="100">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32">
+                            <path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+                                stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3>Pick Algorithms</h3>
+                    <p>Select multiple algorithms to compare head-to-head. See how they perform against each other on
+                        identical inputs.</p>
+                </div>
+                <div class="step-card glass-card" data-reveal data-delay="200">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32">
+                            <path
+                                d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+                                stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3>Configure & Run</h3>
+                    <p>Set input sizes from 100 up to 100,000 elements. The analyzer benchmarks each algorithm across
+                        all sizes.</p>
+                </div>
+                <div class="step-card glass-card" data-reveal data-delay="300">
+                    <div class="step-number">04</div>
+                    <div class="step-icon">
+                        <svg viewBox="0 0 24 24" width="32" height="32">
+                            <path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor" stroke-width="2" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <h3>Get Insights</h3>
+                    <p>Interactive charts, memory usage, Big-O detection, and downloadable PDF/CSV reports — instant
+                        analysis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Analyzer Section -->
+    <section class="section" id="analyzer">
+        <div class="container">
+            <h2 class="section-title" data-reveal>Algorithm Analyzer</h2>
+
+            <!-- App Mode Toggle -->
+            <div class="mode-toggle-container" data-reveal
+                style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div class="mode-pill"
+                    style="background: rgba(255,255,255,0.05); padding: 5px; border-radius: 30px; display: inline-flex;">
+                    <button class="btn btn-ghost active" id="modeBenchmarkMode" style="border-radius: 25px;">Benchmark
+                        Mode</button>
+                    <button class="btn btn-ghost" id="modeVisualizerMode" style="border-radius: 25px;">Visualizer
+                        Mode</button>
+                </div>
+            </div>
+            <div class="panel glass-panel" data-reveal>
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M4 6h16M4 12h16M4 18h7" stroke="currentColor" stroke-width="2" fill="none"
+                                stroke-linecap="round" />
+                        </svg>
+                        Select Category
+                    </h3>
+                    <span class="panel-step">Step 1 of 3</span>
+                </div>
+                <div class="category-grid" id="categoryGrid">
+                    <button class="category-card" data-category="sorting">
+                        <div class="cat-icon">
+                            <svg viewBox="0 0 24 24" width="28" height="28">
+                                <path d="M3 6h7M3 12h10M3 18h14M17 4l4 4-4 4M21 8H15" stroke="currentColor"
+                                    stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="cat-name">Sorting</span>
+                        <span class="cat-count">8 algorithms</span>
+                    </button>
+                    <button class="category-card" data-category="searching">
+                        <div class="cat-icon">
+                            <svg viewBox="0 0 24 24" width="28" height="28">
+                                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.5" fill="none"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <span class="cat-name">Searching</span>
+                        <span class="cat-count">5 algorithms</span>
+                    </button>
+                    <button class="category-card" data-category="graph">
+                        <div class="cat-icon">
+                            <svg viewBox="0 0 24 24" width="28" height="28">
+                                <circle cx="6" cy="6" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                <circle cx="18" cy="6" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                <circle cx="6" cy="18" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                <circle cx="18" cy="18" r="2.5" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                <path d="M8.5 6H15.5M6 8.5V15.5M18 8.5V15.5M8.5 18H15.5" stroke="currentColor"
+                                    stroke-width="1.5" fill="none" />
+                            </svg>
+                        </div>
+                        <span class="cat-name">Graph</span>
+                        <span class="cat-count">6 algorithms</span>
+                    </button>
+                    <button class="category-card" data-category="greedy">
+                        <div class="cat-icon">
+                            <svg viewBox="0 0 24 24" width="28" height="28">
+                                <path
+                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                                    stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="cat-name">Greedy</span>
+                        <span class="cat-count">5 algorithms</span>
+                    </button>
+                    <button class="category-card" data-category="backtracking">
+                        <div class="cat-icon">
+                            <svg viewBox="0 0 24 24" width="28" height="28">
+                                <path d="M9 14l-4-4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M5 10h11a4 4 0 010 8h-1" stroke="currentColor" stroke-width="1.5" fill="none"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <span class="cat-name">Backtracking</span>
+                        <span class="cat-count">5 algorithms</span>
+                    </button>
+                    <button class="category-card" data-category="divideconquer">
+                        <div class="cat-icon">
+                            <svg viewBox="0 0 24 24" width="28" height="28">
+                                <path d="M16 3h5v5M4 20L20.5 3.5M21 16v5h-5M14 14l6.5 6.5M3 8V3h5M3.5 3.5L10 10"
+                                    stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span class="cat-name">Divide & Conquer</span>
+                        <span class="cat-count">5 algorithms</span>
+                    </button>
+                    <button class="category-card" data-category="recursion">
+                        <div class="cat-icon">
+                            <svg viewBox="0 0 24 24" width="28" height="28">
+                                <path d="M4 12a8 8 0 0116 0" stroke="currentColor" stroke-width="1.5" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M20 12a8 8 0 01-16 0" stroke="currentColor" stroke-width="1.5" fill="none"
+                                    stroke-linecap="round" stroke-dasharray="4 4" />
+                                <circle cx="12" cy="12" r="2" stroke="currentColor" stroke-width="1.5" fill="none" />
+                            </svg>
+                        </div>
+                        <span class="cat-name">Recursion</span>
+                        <span class="cat-count">5 algorithms</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Algorithm Picker -->
+            <div class="panel glass-panel" id="algorithmPanel" data-reveal style="display:none;">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"
+                                stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Select Algorithms
+                    </h3>
+                    <span class="panel-step">Step 2 of 3</span>
+                </div>
+                <p class="panel-desc">Select algorithms to compare. Choose at least 2 for meaningful comparison.</p>
+                <div class="algorithm-chips" id="algorithmChips"></div>
+                <div class="panel-actions">
+                    <button class="btn btn-ghost" id="selectAllBtn">Select All</button>
+                    <button class="btn btn-ghost" id="clearAllBtn">Clear All</button>
+                </div>
+            </div>
+
+            <!-- Input Configuration -->
+            <div class="panel glass-panel" id="inputPanel" data-reveal style="display:none;">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"
+                                stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
+                        </svg>
+                        Configure Input
+                    </h3>
+                    <span class="panel-step">Step 3 of 3</span>
+                </div>
+                <div class="input-config">
+                    <div class="input-row">
+                        <label class="input-label">Input Sizes</label>
+                        <div class="size-presets" id="sizePresets">
+                            <button class="preset-btn active" data-size="100">100</button>
+                            <button class="preset-btn active" data-size="500">500</button>
+                            <button class="preset-btn active" data-size="1000">1K</button>
+                            <button class="preset-btn active" data-size="5000">5K</button>
+                            <button class="preset-btn active" data-size="10000">10K</button>
+                            <button class="preset-btn" data-size="50000">50K</button>
+                            <button class="preset-btn" data-size="100000">100K</button>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label class="input-label">Data Pattern</label>
+                        <div class="pattern-select" id="patternSelect">
+                            <button class="pattern-btn active" data-pattern="random">Random</button>
+                            <button class="pattern-btn" data-pattern="sorted">Sorted</button>
+                            <button class="pattern-btn" data-pattern="reversed">Reversed</button>
+                            <button class="pattern-btn" data-pattern="nearly-sorted">Nearly Sorted</button>
+                        </div>
+                    </div>
+                    <div class="input-row">
+                        <label class="input-label">Iterations per size</label>
+                        <div class="iter-control">
+                            <input type="range" id="iterSlider" min="1" max="50" value="3" class="range-slider">
+                            <span class="iter-value" id="iterValue">3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Run Button -->
+            <div class="run-container" id="runContainer" style="display:none;" data-reveal>
+                <button class="btn btn-run" id="runBtn">
+                    <span class="run-text">Run Analysis</span>
+                    <span class="run-icon">
+                        <svg viewBox="0 0 24 24" width="22" height="22">
+                            <polygon points="5 3 19 12 5 21 5 3" stroke="currentColor" stroke-width="2"
+                                fill="currentColor" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </button>
+                <div class="progress-container" id="progressContainer" style="display:none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">Initializing...</span>
+                </div>
+            </div>
+
+            <!-- Visualizer Panel -->
+            <div class="panel glass-panel" id="visualizerPanel" style="display:none;" data-reveal>
+                <div class="panel-header" style="justify-content: space-between; align-items: center;">
+                    <h3 class="panel-title">
+                        <svg viewBox="0 0 24 24" width="20" height="20">
+                            <path
+                                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14v4a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v4z"
+                                stroke="currentColor" stroke-width="2" fill="none" />
+                        </svg>
+                        Algorithm Visualization
+                    </h3>
+                    <div id="visStatus" style="font-size: 0.9em; color: #8b5cf6; font-weight: 600;">Select an algorithm
+                        to begin</div>
+                </div>
+
+                <!-- Web Player Controls -->
+                <div class="vis-controls border-b"
+                    style="display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px;">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button class="btn btn-ghost" id="visGenerateBtn"
+                            style="padding: 6px 14px; font-size: 0.85rem;">New
+                            Array</button>
+                        <select id="visSizeSelect" class="pattern-btn" style="padding: 6px 12px;">
+                            <option value="10">10 Items</option>
+                            <option value="25">25 Items</option>
+                            <option value="50" selected>50 Items</option>
+                            <option value="100">100 Items</option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn-icon" id="visBtnPrev"
+                            style="background:rgba(255,255,255,0.05); border-radius:50%; width:40px; height:40px; border:none; color:white; cursor:pointer;"
+                            aria-label="Step Back">
+                            <svg viewBox="0 0 24 24" width="18" height="18">
+                                <polygon points="19 20 9 12 19 4 19 20" fill="currentColor" />
+                                <rect x="5" y="4" width="2" height="16" fill="currentColor" />
+                            </svg>
+                        </button>
+                        <button class="btn-icon" id="visBtnPlay"
+                            style="background:#8b5cf6; border-radius:50%; width:40px; height:40px; border:none; color:white; cursor:pointer;"
+                            aria-label="Play/Pause">
+                            <svg viewBox="0 0 24 24" width="18" height="18" style="margin-left: 2px;">
+                                <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" id="playIconPoly" />
+                            </svg>
+                        </button>
+                        <button class="btn-icon" id="visBtnNext"
+                            style="background:rgba(255,255,255,0.05); border-radius:50%; width:40px; height:40px; border:none; color:white; cursor:pointer;"
+                            aria-label="Step Forward">
+                            <svg viewBox="0 0 24 24" width="18" height="18">
+                                <polygon points="5 4 15 12 5 20 5 4" fill="currentColor" />
+                                <rect x="17" y="4" width="2" height="16" fill="currentColor" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: #a1a1aa;">
+                        <span>Speed</span>
+                        <input type="range" id="visSpeedSlider" min="20" max="500" value="100" class="range-slider"
+                            style="width: 100px; direction: rtl;">
+                    </div>
+                </div>
+
+                <!-- Canvas -->
+                <div class="canvas-container"
+                    style="height: 350px; width: 100%; background: rgba(0,0,0,0.2) !important; border-radius: 8px;">
+                    <canvas id="visCanvas"></canvas>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="section" id="results" style="display:none;">
+        <div class="container">
+            <h2 class="section-title" data-reveal>Analysis Results</h2>
+
+            <!-- Charts Row -->
+            <div class="results-grid">
+                <div class="chart-panel glass-panel" data-reveal>
+                    <div class="panel-header">
+                        <h3 class="panel-title">Execution Time vs Input Size</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="timeChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-panel glass-panel" data-reveal>
+                    <div class="panel-header">
+                        <h3 class="panel-title">Memory Usage Comparison</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="memoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="panel glass-panel" data-reveal>
+                <div class="panel-header">
+                    <h3 class="panel-title">Benchmark Data</h3>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Algorithm</th>
+                                <th>Input Size</th>
+                                <th>Time ± σ (ms)</th>
+                                <th>Min Time (ms)</th>
+                                <th>Max Time (ms)</th>
+                                <th>Memory (KB)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Complexity Insights -->
+            <div class="panel glass-panel" data-reveal>
+                <div class="panel-header">
+                    <h3 class="panel-title">Complexity Insights</h3>
+                </div>
+                <div class="insights-grid" id="insightsGrid"></div>
+            </div>
+
+            <!-- Export Panel -->
+            <div class="export-panel" data-reveal>
+                <button class="btn btn-glass btn-export" id="exportPdf">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor"
+                            stroke-width="2" fill="none" />
+                        <polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" fill="none" />
+                        <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="2" />
+                        <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                    Download PDF Report
+                </button>
+                <button class="btn btn-glass btn-export" id="exportCsv">
+                    <svg viewBox="0 0 24 24" width="18" height="18">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor"
+                            stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    Download CSV Data
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>AlgoViz — Algorithm Performance Analyzer &bull; Runs entirely in your browser</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="js/algorithms/sorting.js"></script>
+    <script src="js/algorithms/searching.js"></script>
+    <script src="js/algorithms/graph.js"></script>
+    <script src="js/algorithms/greedy.js"></script>
+    <script src="js/algorithms/backtracking.js"></script>
+    <script src="js/algorithms/divideconquer.js"></script>
+    <script src="js/algorithms/recursion.js"></script>
+    <script src="js/generator.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/tracer.js"></script>
+    <script src="js/animator.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/exporter.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
