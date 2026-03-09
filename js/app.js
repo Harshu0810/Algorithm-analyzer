@@ -2,7 +2,6 @@
    AlgoViz — Main Application Controller
    Liquid Glass UI with activetheory.net-inspired animations
    ============================================= */
-import { Analytics } from "@vercel/analytics/next"
 const AlgoApp = (() => {
     // =================== State ===================
     const state = {
@@ -835,4 +834,5 @@ const AlgoApp = (() => {
     // Public API
     return { getAlgorithmLibrary };
 })();
+
 
